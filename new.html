@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Sign In</title>
+	<link rel="stylesheet" href="login.css">
+</head>
+<body>
+	<main class="login-wrap">
+		<form id="loginForm" class="login-form">
+			<h2>Sign In</h2>
+			<label>Email
+				<input id="emailInput" name="email" type="email" placeholder="you@example.com" required>
+			</label>
+			<button type="submit">Continue</button>
+			<p id="status" style="margin-top:10px;color:green;display:none"></p>
+			<p class="back"><a href="index.html">← Back to Home</a></p>
+		</form>
+	</main>
+
+	<script>
+	// Simple client-only handler: saves email locally and shows confirmation.
+	document.getElementById('loginForm').addEventListener('submit', function(e){
+		e.preventDefault();
+		const emailEl = document.getElementById('emailInput');
+		const email = (emailEl.value || '').trim();
+		const statusEl = document.getElementById('status');
+		if(!email){
+			statusEl.style.display = 'block';
+			statusEl.style.color = 'crimson';
+			statusEl.textContent = 'कृपया वैध ईमेल भरा.';
+			return;
+		}
+		// store locally (no network call)
+		try{
+			localStorage.setItem('savedEmail', email);
+			statusEl.style.display = 'block';
+			statusEl.style.color = 'green';
+			statusEl.textContent = 'ईमेल जतन केला (local).';
+		} catch(err){
+			statusEl.style.display = 'block';
+			statusEl.style.color = 'crimson';
+			statusEl.textContent = 'त्रुटी: ईमेल जतन करता आला नाही.';
+		}
+	});
+	</script>
+</body>
+</html>

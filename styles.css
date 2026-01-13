@@ -1,0 +1,285 @@
+:root{--accent:#1877e4;--bg:#0b0b0b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:Inter,system-ui,Arial,sans-serif;color:#252020;background:var(--bg)}
+.site-header{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:50;background:linear-gradient(180deg,rgba(0,0,0,0.35),rgba(0,0,0,0.05));backdrop-filter:blur(6px)}
+.site-header .logo img{height:40px;display:block}
+.main-nav a{color:#b8adad;margin-left:18px;text-decoration:none;font-weight:600;opacity:0.95}
+.main-nav a.signin{background:var(--accent);padding:8px 12px;border-radius:6px;color:#fff}
+
+.slideshow{position:fixed;inset:0;z-index:0;overflow:hidden}
+.slide{position:absolute;inset:0;background-position:center;background-size:cover;opacity:0;transition:opacity 1s ease,transform 8s ease;transform:scale(1)}
+.slide.active{opacity:1;transform:scale(1.07)}
+
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;z-index:10}
+.hero-inner{padding-top:80px;text-align:center}
+.hero h1{font-size:48px;margin-bottom:12px}
+.hero p{font-size:18px;opacity:0.9}
+
+/* New Styles */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: #0e1011; /* blue */
+    color: #fff;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.logo-container { display:flex; align-items:center; gap:10px; }
+.logo {
+    display: block;
+    height: 7px;              /* size वाढवा (44px → 50px किंवा अधिक) */
+    width: auto;               /* aspect ratio maintain रहेल */
+    position: relative;
+    z-index: 1300;
+    object-fit: contain;       /* पूर्ण logo दिसेल, crop होणार नाही */
+    padding: 0 9px;            /* sides मध्ये spacing */
+}
+
+/* जर crop करायचंय (circle/square) तर: */
+.logo {
+    height: 0px;
+    width: 0px;               /* square बनवा */
+    object-fit: calc();         /* crop करून fill करेल */
+    border-radius: 8px;        /* optional: corners round करा */
+}
+
+/* किंवा आणखी मोठं करायचंय: */
+.logo {
+    height: 200px;              /* desktop size */
+    width: auto;
+    object-fit: contain;
+}
+
+/* mobile साठी छोटं: */
+@media (max-width: 900px) {
+    .logo {
+        height: 60px;
+        width: auto;
+    }
+}
+
+/* nav on right */
+.header-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+.header-nav a:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* Keep the sign-in/login button color fixed on hover */
+.header-nav a.login-button, .login-button {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+.header-nav a.login-button:hover, .login-button:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ensure page content starts below fixed header */
+.main-content {
+    padding-top: 84px; /* header height + spacing */
+    /* ...existing main-content styles if any ... */
+}
+
+/* carousel container — large desktop feel */
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 80vh;               /* desktop-size height */
+    max-height: 900px;
+    min-height: 420px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    background: #000;
+}
+
+/* slide images created by script.js */
+.carousel-image{
+    position:absolute;
+    inset:0;
+    background-position:center;
+    background-size:cover;
+    opacity:0;
+    transition:opacity 1s ease, transform 8s ease;
+    transform:scale(1);
+    z-index:5;
+}
+.carousel-image.active{opacity:1;transform:scale(1.03);z-index:10}
+
+/* moving background layer (horizontal pan) */
+.carousel-bg {
+    position: absolute;
+    inset: 0; /* top:0; right:0; bottom:0; left:0 */
+    z-index: 0;
+    background-image: url("https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg");
+    background-image: url("https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg");
+    background-size: cover;            /* cover to fill */
+    background-position: 0% 50%;       /* start at left center */
+    will-change: background-position;
+    animation: panHorizontal 30s linear infinite;
+}
+
+/* caption centered on image */
+.carousel-caption {
+    position: absolute;
+    z-index: 20;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+}
+
+.carousel-caption h1 {
+    color: #141313;
+    font-size: clamp(2rem, 4vw, 4rem);
+    letter-spacing: 1px;
+    margin: 0;
+    text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.12);
+    padding: 8px 16px;
+    border-radius: 6px;
+}
+
+/* dots (ensure above bg) */
+.carousel-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 25; display:flex; gap:10px; }
+.dot { width:12px; height:12px; border-radius:50%; background-color: rgba(255,255,255,0.6); cursor:pointer; }
+.dot.active { background-color:#fff; }
+
+/* pan animation - horizontal left→right→left */
+@keyframes panHorizontal {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* responsive adjustments */
+@media (max-width: 900px) {
+    .carousel { height: 60vh; min-height: 340px; }
+    .carousel-overlay { width: 260px; height: 56px; }
+}
+@media (max-width: 600px) {
+    .carousel { height: 50vh; }
+    .carousel-overlay {
+        top: 0; left: 0; right: 0; width: 100%;
+        justify-content: center; border-bottom-left-radius: 0;
+    }
+    .carousel-caption h1 { font-size: 1.6rem; padding: 6px 10px; }
+}
+
+/* ================= SEARCH UI (HOME PAGE) ================= */
+
+.search-box{
+    position:absolute;
+    left:50%;
+    bottom:160px;                 /* 🔥 UI वर */
+    transform:translateX(-50%);
+    background:#ffffff;
+    padding:18px 22px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    z-index:40;
+    box-shadow:0 18px 45px rgba(0,0,0,0.35);
+}
+
+/* Buy / Rent toggle */
+.search-tabs{
+    position:absolute;
+    top:-44px;                    /* 🔥 toggle search वर */
+    left:18px;
+    background:#e9e9e9;
+    padding:4px;
+    border-radius:10px;
+    display:flex;
+    gap:4px;
+}
+
+.search-tabs button{
+    border:none;
+    background:transparent;
+    padding:8px 20px;
+    font-weight:700;
+    cursor:pointer;
+    border-radius:8px;
+    color:#222;
+}
+
+.search-tabs button.active{
+    background:#0f1c3f;
+    color:#fff;
+}
+
+/* inputs */
+.search-box input,
+.search-box select{
+    height:44px;
+    padding:0 12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    min-width:160px;
+    font-size:14px;
+}
+
+/* search button */
+.search-btn{
+    height:44px;
+    padding:0 28px;
+    border:none;
+    border-radius:10px;
+    background:#f9a000;
+    font-weight:800;
+    cursor:pointer;
+}
+
+/* mobile */
+@media(max-width:900px){
+    .search-box{
+        flex-wrap:wrap;
+        width:92%;
+        justify-content:center;
+        bottom:110px;
+    }
+    .search-tabs{
+        left:50%;
+        transform:translateX(-50%);
+    }
+}

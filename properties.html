@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Properties - India / Maharashtra</title>
+  <link rel="stylesheet" href="properties.css" />
+  <link rel="stylesheet" href="chatbot.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <span class="logo-icon">🏠</span>
+          <span class="logo-text">Luxe<span class="logo-estate">Estate</span></span>
+        </a>
+        <nav class="nav-menu">
+          <a href="index.html">Home</a>
+          <a href="properties.html" class="active">Properties</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <div class="header-right">
+          <span class="phone">📞 (555) 123-4567</span>
+          <button class="sign-in">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+      <h1>Explore Our Properties</h1>
+      <p>Discover your perfect home from our curated collection of luxury properties</p>
+    </div>
+  </section>
+
+  <!-- FILTERS SECTION -->
+  <main class="container">
+    <!-- AI RECOMMENDATION BANNER -->
+    <section class="ai-banner">
+      <div class="ai-banner-content">
+        <span class="ai-icon">🤖</span>
+        <div class="ai-text">
+          <h3>AI-Powered Property Finder</h3>
+          <p>Get personalized recommendations based on your preferences</p>
+        </div>
+        <button class="ai-chat-btn" onclick="openAIAssistant()">Get Recommendations</button>
+      </div>
+    </section>
+
+    <!-- ADVANCED FILTERS -->
+    <section class="filters-section">
+      <div class="filters-header">
+        <h3>🔍 Advanced Filters</h3>
+        <button class="filter-toggle" onclick="toggleAdvancedFilters()">▼ More Options</button>
+      </div>
+
+      <div class="filter-grid">
+        <div class="filter-group">
+          <label for="regionSelect">
+            📍 Region:
+            <select id="regionSelect">
+              <option value="all">All India</option>
+              <option value="maharashtra">Maharashtra</option>
+            <option value="tamil-nadu">Tamil Nadu</option>
+            <option value="delhi">Delhi</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <label for="priceSelect">
+          💰 Price Range:
+          <select id="priceSelect">
+            <option value="all">All Prices</option>
+            <option value="low">Below ₹1 Cr</option>
+            <option value="mid">₹1-3 Cr</option>
+            <option value="high">Above ₹3 Cr</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <label for="bedsSelect">
+          🛏️ Bedrooms:
+          <select id="bedsSelect">
+            <option value="all">All Bedrooms</option>
+            <option value="1">1 Bedroom</option>
+            <option value="2">2 Bedrooms</option>
+            <option value="3">3+ Bedrooms</option>
+            <option value="4">4+ Bedrooms</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input"
+          placeholder="🔍 Search properties..."
+        />
+      </div>
+
+      <button class="reset-btn" onclick="resetFilters()">Reset</button>
+      </div>
+    </section>
+
+    <!-- PROPERTIES GRID -->
+    <div class="properties-header">
+      <span id="propertyCount">Showing 0 properties</span>
+      <div class="view-toggle">
+        <button class="grid-view active" onclick="setViewMode('grid')">⊞ Grid</button>
+        <button class="list-view" onclick="setViewMode('list')">≡ List</button>
+      </div>
+    </div>
+
+    <section id="propertiesGrid" class="grid" aria-live="polite"></section>
+
+    <!-- LOAD MORE BUTTON -->
+    <div id="loadMoreWrap" class="load-more-wrap" hidden>
+      <button id="loadMoreBtn" class="load-more-btn">Load More Properties ↓</button>
+    </div>
+  </main>
+
+  <!-- MODAL / PROPERTY PREVIEW -->
+  <div id="propertyModal" class="modal" aria-hidden="true">
+    <div class="modal-overlay" onclick="closeModal(event)"></div>
+    <div class="modal-content">
+      <button id="modalClose" class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="Property preview" class="modal-image" />
+        <div class="modal-details">
+          <h2 id="modalTitle"></h2>
+          <div class="modal-meta">
+            <span class="price" id="modalPrice"></span>
+            <span class="featured-badge">Featured ⭐</span>
+          </div>
+          <p class="location" id="modalLocation"></p>
+          <p class="description" id="modalDesc"></p>
+          <div class="property-features">
+            <div class="feature">
+              <span class="feature-icon">🛏️</span>
+              <div>
+                <p class="feature-value" id="modalBeds">-</p>
+                <p class="feature-label">Bedrooms</p>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">🚿</span>
+              <div>
+                <p class="feature-value" id="modalBaths">-</p>
+                <p class="feature-label">Bathrooms</p>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="feature-icon">📐</span>
+              <div>
+                <p class="feature-value" id="modalArea">-</p>
+                <p class="feature-label">Area (sqft)</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-primary">Schedule Tour</button>
+            <button class="btn-secondary">❤️ Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer id="siteFooter" class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>
+            <span class="footer-logo-icon">🏠</span>
+            Luxe<span class="footer-estate">Estate</span>
+          </h3>
+          <p>Your trusted partner in luxury real estate. We help you find the perfect home that matches your lifestyle and aspirations.</p>
+          <div class="footer-contact">
+            <p>📍 123 Luxury Ave, New York, NY 10001</p>
+            <p>📞 (555) 123-4567</p>
+            <p>📧 hello@luxestate.com</p>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="#">Our Team</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Properties</h4>
+          <ul>
+            <li><a href="#">All Listings</a></li>
+            <li><a href="#">Featured</a></li>
+            <li><a href="#">New Listings</a></li>
+            <li><a href="#">Sold Properties</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Market Insights</a></li>
+            <li><a href="#">Mortgage Calculator</a></li>
+            <li><a href="#">Buying Guide</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 LuxeEstate. All rights reserved.</p>
+        <div class="social-links">
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="Twitter">𝕏</a>
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CHATBOT WIDGET -->
+  <div id="chatbotContainer" class="chatbot-container">
+    <div class="chatbot-header">
+      <h3>🤖 Property Assistant</h3>
+      <div class="chatbot-header-right">
+        <button id="historyBtn" class="history-btn" title="View Chat History">↶</button>
+        <button id="themeToggle" class="theme-toggle" title="Toggle Dark/Light Mode">🌙</button>
+        <div class="language-selector">
+          <button class="language-toggle" id="languageToggle">
+            <span class="language-icon">🌐</span>
+            <span class="language-code" id="currentLang">EN</span>
+            <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="language-dropdown" id="languageDropdown">
+            <button class="language-option" data-lang="en">🇬🇧 English</button>
+            <button class="language-option" data-lang="hi">🇮🇳 हिंदी (Hindi)</button>
+            <button class="language-option" data-lang="mr">🇮🇳 मराठी (Marathi)</button>
+            <button class="language-option" data-lang="fr">🇫🇷 Français (French)</button>
+          </div>
+        </div>
+        <button id="chatbotToggle" class="chatbot-toggle">−</button>
+      </div>
+    </div>
+    
+    <div id="chatbotMessages" class="chatbot-messages">
+      <div class="chat-message bot-message">
+        <p>Hello! 👋 I'm your property assistant. Ask me about locations, prices, or explore our listings!</p>
+      </div>
+    </div>
+
+    <div class="chatbot-input-area">
+      <input 
+        type="text" 
+        id="chatbotInput" 
+        class="chatbot-input" 
+        placeholder="Type your question..."
+        autocomplete="off"
+      />
+      <button id="chatbotSend" class="chatbot-send">Send</button>
+    </div>
+  </div>
+
+  <!-- PROPERTIES POPUP MODAL -->
+  <div id="propertiesModal" class="properties-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalCityName">City Properties</h2>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-place-info" id="modalPlaceInfo"></div>
+      <div class="modal-properties-list" id="modalPropertiesList"></div>
+    </div>
+  </div>
+
+  <script src="properties.js"></script>
+  <script src="chatbot.js"></script>
+  <script>
+    // load footer.html if present (keeps your existing footer)
+    fetch('footer.html').then(r => r.ok ? r.text() : '').then(html => {
+      if (html) document.getElementById('siteFooter').innerHTML = html;
+    });
+  </script>
+</body>
+</html>
